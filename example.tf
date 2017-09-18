@@ -18,13 +18,14 @@ resource "akamai_gtm_data_center" "property_test_dc1" {
 }
 
 resource "akamai_gtm_data_center" "property_test_dc2" {
-  name      = "property_test_dc2"
-  domain    = "${akamai_gtm_domain.property_test_domain.name}"
-  country   = "IS"
-  continent = "EU"
-  city      = "Snæfellsjökull"
-  longitude = -23.776
-  latitude  = 64.808
+  name                   = "property_test_dc2"
+  domain                 = "${akamai_gtm_domain.property_test_domain.name}"
+  country                = "IS"
+  continent              = "EU"
+  city                   = "Snæfellsjökull"
+  longitude              = -23.776
+  latitude               = 64.808
+  cloud_server_targeting = true
 
   depends_on = [
     "akamai_gtm_data_center.property_test_dc1",
@@ -81,10 +82,7 @@ resource "akamai_gtm_property" "test_property" {
     data_center_id = "${akamai_gtm_data_center.property_test_dc2.id}"
     weight         = 50.0
     name           = "${akamai_gtm_data_center.property_test_dc2.name}"
-
-    servers = [
-      "1.2.3.6",
-      "1.2.3.7",
-    ]
+    handout_cname  = "www.google.com"
+    servers        = ["www.google.com"]
   }
 }
